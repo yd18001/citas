@@ -10,12 +10,10 @@
         filter: progid:DXImageTransform.Microsoft.Shadow(color='#454545', Direction=135, Strength=4);    
     }
 </style>
-<br>
 
 <h1 class="display-4 text-center">Gestionar Medicos</h1>
 
 <div class="p-5">
-    <br>
     <span class="tt" data-bs-placement="bottom" title="Agrega una nuevo medico">
         <a href="medicos/create" class="btn btn-primary">Agregar Nuevo Medico</a>
     </span>
@@ -23,8 +21,8 @@
     <br> <br>
     <div class="table-responsive">
 
-        <table class="table table-striped table-dark ">
-            <thead>
+        <table class="table">
+            <thead class="thead-dark">
                 <tr class="bg-title">
                     <th scope="col">Nombre Medico</th>
                     <th scope="col">Limite de Citas</th>

@@ -48,32 +48,32 @@ class CitaController extends Controller
             'fechaCita' => 'required',
         ]);
 
-            // Obtener el tipo seleccionado
-            $tipo = $request->input('tipo');
+        // Obtener el tipo seleccionado
+        $tipo = $request->input('tipo');
 
-            if ($tipo == 'medico') {
-                // Obtener el médico seleccionado
-                $medico_id = $request->input('medico_id');
-                $medico = Medico::find($request->medico_id);
+        if ($tipo == 'medico') {
+            // Obtener el médico seleccionado
+            $medico_id = $request->input('medico_id');
+            $medico = Medico::find($request->medico_id);
 
-                // Verificar si el número de citas para este médico en este día ya ha alcanzado el límite
-                $numCitasMedico = $medico->citas()->where('fechaCita', $request->fechaCita)->where('estadoCita', 'Agendada')->count();
+            // Verificar si el número de citas para este médico en este día ya ha alcanzado el límite
+            $numCitasMedico = $medico->citas()->where('fechaCita', $request->fechaCita)->where('estadoCita', 'Agendada')->count();
 
-                if ($numCitasMedico >= $medico->limiteCitas) {
-                    return redirect()->back()->with('error', 'El médico ya ha alcanzado el límite de citas para este día.');
-                }
+            if ($numCitasMedico >= $medico->limiteCitas) {
+                return redirect()->back()->with('error', 'El médico ya ha alcanzado el límite de citas para este día.');
+            }
 
-                // Crear la cita con el médico
-                $cita = new Cita();
-                $cita->nombreCompleto = $request->input('nombreCompleto');
-                $cita->numeroTelefono = $request->input('numeroTelefono');
-                $cita->fechaCita = $request->input('fechaCita');
-                $cita->horaCita = $request->input('horaCita');
-                $cita->medico_id = $medico_id;
-                $cita->estadoCita = 'Agendada';
-                $cita->save();
-            } else {
-            
+            // Crear la cita con el médico
+            $cita = new Cita();
+            $cita->nombreCompleto = $request->input('nombreCompleto');
+            $cita->numeroTelefono = $request->input('numeroTelefono');
+            $cita->fechaCita = $request->input('fechaCita');
+            $cita->horaCita = $request->input('horaCita');
+            $cita->medico_id = $medico_id;
+            $cita->estadoCita = 'Agendada';
+            $cita->save();
+        } else {
+
             // Obtener el examen seleccionado
             $exam_id = $request->input('exam_id');
             $examen = Exam::find($request->exam_id);
@@ -94,10 +94,9 @@ class CitaController extends Controller
             $cita->exam_id = $exam_id;
             $cita->estadoCita = 'Agendada';
             $cita->save();
-            }
-            
-            return redirect('/dashboard');
-        
+        }
+
+        return redirect('/dashboard');
     }
 
     /**
@@ -143,7 +142,6 @@ class CitaController extends Controller
         $cita->save();
 
         return redirect('/citas');
-
     }
 
     /**
@@ -158,5 +156,4 @@ class CitaController extends Controller
         $cita->delete();
         return redirect('/citas');
     }
-    
 }

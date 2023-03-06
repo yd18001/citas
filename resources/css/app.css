@@ -12,3 +12,9 @@
     margin-top: 20px; /* Valor para mover hacia abajo */
 }
 
+.actions_right {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row-reverse;
+    position: relative;
+}

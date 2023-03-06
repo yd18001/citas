@@ -288,6 +288,7 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Menu-Configuration
     |
     */
+
     'menu' => [    // Navbar items:    [        'type'         => 'navbar-search',        'text'         => 'search',        'topnav_right' => true,    ],
         [  'topnav_right' => true,    ],
     

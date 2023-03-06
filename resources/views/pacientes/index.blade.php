@@ -21,8 +21,8 @@
     </span>
     <br> <br>
     <div class="table-responsive">
-        <table class="table table-striped table-dark">
-            <thead>
+        <table class="table">
+            <thead class="thead-dark">
                 <tr>
                     <th>Carnet</th>
                     <th>Nombre</th>

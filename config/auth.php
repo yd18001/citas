@@ -38,9 +38,9 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'role',
         ],
-    ],
+    ],    
 
     /*
     |--------------------------------------------------------------------------
@@ -59,6 +59,7 @@ return [
     |
     */
 
+    /*
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
@@ -70,6 +71,22 @@ return [
         //     'table' => 'users',
         // ],
     ],
+    */
+    
+    'providers' => [
+        'users' => [
+            'driver' => 'database',
+            'table' => 'users',
+            'where' => ['active' => true],
+        ],
+        'role' => [
+            'driver' => 'database',
+            'table' => 'users',
+            'where' => ['active' => true],
+            'role_field' => 'role',
+        ],
+    ],
+    
 
     /*
     |--------------------------------------------------------------------------

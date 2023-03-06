@@ -80,7 +80,7 @@ class MedicoController extends Controller
     public function edit($id)
     {
         $medico = Medico::find($id);
-        $especialidades = Especialidad::all(); 
+        $especialidades = Especialidad::all();
         return view('medicos.edit')->with('medico', $medico)->with('especialidades', $especialidades);
     }
 

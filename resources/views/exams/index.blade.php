@@ -23,8 +23,8 @@
     <br> <br>
     <div class="table-responsive">
 
-        <table class="table table-striped table-dark ">
-            <thead>
+        <table class="table">
+            <thead class="thead-dark">
                 <tr class="bg-title">
                     <th scope="col">Nombre Examen</th>
                     <th scope="col">Clinica</th>
