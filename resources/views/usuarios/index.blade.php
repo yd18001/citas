@@ -11,14 +11,21 @@
         }
     </style>
 
-    <div class="container">
-      
-        <h1 class="display-4 text-center">Gestionar Usuarios</h1>
 
-        <div class="p-5">
+    <div class="container">
+        @role('Admin')
+            <div class="alert alert-success">
+                Eres un administrador!
+            </div>
+        @endrole
+
+        <div class="p-4">
+            <h1 class="display-4 text-center">Gestionar Usuarios</h1>
             <span class="tt" data-bs-placement="bottom" title="Agrega un nuevo usuario">
-                <a href="usuarios/create" class="btn btn-primary" data-toggle="tooltip" data-placement="top"
-                    title="Clic para agregar un nuevo usuario">CREAR</a>
+                @can('usuarios.create')
+                    <a href="usuarios/create" class="btn btn-dark" data-toggle="tooltip" data-placement="top"
+                        title="Clic para agregar un nuevo usuario">Crear Usuario</a>
+                @endcan
             </span>
 
             <br> <br>
@@ -36,10 +43,10 @@
                             <tr>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->username }}</td>
-                                <td>
-                                    <form action="{{ route('usuarios.destroy', $user->id) }}" method="POST">
-                                        @csrf
-                                        @if ($user->role == 'recepcion')
+                                @can('usuarios.edit')
+                                    <td>
+                                        <form action="{{ route('usuarios.destroy', $user->id) }}" method="POST">
+                                            @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger" ata-toggle="tooltip"
                                                 data-placement="top" title="Clic para eliminar el usuario"
@@ -54,9 +61,9 @@
                                                 data-toggle="tooltip" data-placement="top" title="Editar usuario">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
-                                        @endif
-                                    </form>
-                                </td>
+                                        </form>
+                                    </td>
+                                @endcan
                             </tr>
                         @endforeach
                     </tbody>

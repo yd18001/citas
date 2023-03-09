@@ -17,6 +17,19 @@
     }
     }
 
+    function validatePasswordConfirm() {
+        var password = document.getElementById('password');
+        var passwordConfirm = document.getElementById('password_confirmation');
+        var passwordConfirmError = document.getElementById('password-confirm-error');
+        if (password.value !== passwordConfirm.value) {
+            passwordConfirmError.style.display = 'block';
+            passwordConfirm.setCustomValidity('Las contraseñas no coinciden.');
+        } else {
+            passwordConfirmError.style.display = 'none';
+            passwordConfirm.setCustomValidity('');
+        }
+    }
+
     function togglePassword() {
         const passwordInput = document.getElementById('password');
         // Cambiar el tipo de entrada del campo de contraseña de "password" a "text" y viceversa
@@ -25,13 +38,19 @@
         } else {
             passwordInput.type = 'password';
         }
+        const passwordConfirmInput = document.getElementById('password_confirmation');
+        if(passwordConfirmInput.type === 'password'){
+            passwordConfirmInput.type = 'text';
+        }else{
+            passwordConfirmInput.type = 'password';
+        }
     }</script>
 
 <div class="d-flex">
     <div class="card mx-auto" style="width: 60%; margin-top: 2%;">
-        <h5 class="card-header text-center text-white bg-dark">Agregar Usuario</h5>
+        <h5 class="card-header text-center text-white bg-dark">Actualizar Usuario</h5>
             <div class="card-body">
-                <form action="/User/{{$user->id}}" method="POST">
+                <form action="/usuarios/{{$user->id}}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="mb-3">
@@ -43,22 +62,18 @@
                         <input id="username" name="username" type="text" class="form-control" value="{{$user->username}}" required>
                     </div>
                     <div class="mb-3">
-                        <label for="role" class="form-label">role</label>
-                        <select id="role" name="role" class="form-control" required>
-                            <option value="admin" {{$user->role ? 'selected' : ''}}>Administrador</option>
-                            <option value="recepcion" {{!$user->role ? 'selected' : ''}}>Recepcionista</option>
-                            <option value="user" {{!$user->role ? 'selected' : ''}}>Usuario</option>
+                        <label for="role" class="form-label">Modificar Rol</label>
+                        <select id="role" name="roles[]" class="form-control" required>
+                            @foreach($roles as $role)
+                                <option value="{{ $role->id }}" {{ $user->hasRole($role) ? 'selected' : '' }}>{{ $role->name }}</option>
+                            @endforeach
                         </select>
-                    </div>        
+                    </div>                    
                     <!--Contraseña-->
-                    <div class="form-group">
-                        <label for="password">Contraseña actual</label>
-                        <input id="password" type="text" class="form-control" name="password" value="{{ $user->password }}" disabled>
-                    </div>
                     <div class="form-group">
                         <label for="password">Nueva Contraseña</label>
                         <div class="input-group">
-                            <input id="password" type="password" class="form-control" name="password" oninput="validatePassword()" required>
+                            <input id="password" type="password" class="form-control" name="password" oninput="validatePassword()" value="{{$user->password}}" required>
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-lock"></span>
@@ -71,13 +86,14 @@
                     <div class="form-group">
                         <label for="password_confirmation">Confirmar Nueva Contraseña</label>
                         <div class="input-group">
-                            <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required>
+                            <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" value="{{$user->password}}" oninput="validatePasswordConfirm()" required>
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-lock"></span>
                                 </div>
                             </div>
                         </div>
+                        <div id="password-confirm-error" style="display: none; color: red;">Las contraseñas no coinciden.</div>
                     </div>
                     
                     <div>
@@ -96,4 +112,12 @@
             </div>
     </div>
 </div>
+<script>
+    @if (session('success'))
+        $(function() {
+            toastr.success('{{ session('success') }}');
+        });
+    @endif
+</script>
+
 @endsection

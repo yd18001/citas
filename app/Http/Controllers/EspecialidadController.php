@@ -4,18 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Especialidad;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Traits\HasPermissions;
 
 class EspecialidadController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            if (auth()->user()->role == 'recepcion' || auth()->user()->role == 'user') {
-                abort(403);
-            }
-            return $next($request);
-        });
+        
     }
     /**
      * Display a listing of the resource.

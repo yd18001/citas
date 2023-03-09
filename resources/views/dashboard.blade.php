@@ -72,7 +72,7 @@
                                             @endforeach
                                         </select>
                                         <!-- Botón de Filtro -->
-                                        <button type="submit" id="filter-button" class="btn btn-primary mr-2 ml-2"
+                                        <button type="submit" id="filter-button" class="btn btn-dark mr-2 ml-2"
                                             form="filtro-form" data-action="load-data">Filtrar</button>
                                     </div>
                                     <!-- Botón de Agendar Cita -->

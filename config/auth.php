@@ -38,10 +38,14 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'role',
+            'provider' => 'users',
         ],
-    ],    
-
+        'spatie' => [
+            'driver' => 'session',
+            'provider' => 'spatie',
+        ],
+    ],
+    
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -59,11 +63,14 @@ return [
     |
     */
 
-    /*
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'spatie' => [
+            'driver' => 'eloquent',
+            'model' => Spatie\Permission\Models\Permission::class,
         ],
 
         // 'users' => [
@@ -71,22 +78,6 @@ return [
         //     'table' => 'users',
         // ],
     ],
-    */
-    
-    'providers' => [
-        'users' => [
-            'driver' => 'database',
-            'table' => 'users',
-            'where' => ['active' => true],
-        ],
-        'role' => [
-            'driver' => 'database',
-            'table' => 'users',
-            'where' => ['active' => true],
-            'role_field' => 'role',
-        ],
-    ],
-    
 
     /*
     |--------------------------------------------------------------------------

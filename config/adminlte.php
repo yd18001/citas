@@ -192,7 +192,7 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
+    'classes_sidebar' => 'sidebar-dark-secondary elevation-4',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
@@ -289,20 +289,28 @@ return [
     |
     */
 
-    'menu' => [    // Navbar items:    [        'type'         => 'navbar-search',        'text'         => 'search',        'topnav_right' => true,    ],
-        [  'topnav_right' => true,    ],
+    'menu' => [   
+        //Navbar items:    
+        [
+            'text'         => 'Inicio', 
+            //'url' => 'inicio',
+            'icon' => 'fas fa-fw fa-home', 
+            'topnav' => true,    
+        ],
     
         // Sidebar items:
-        ['header' => 'Herramientas Administrativas'],
+        [   'header' => 'Herramientas Administrativas',
+            'can' => 'usuarios.index',
+        ],
         [        
             'text' => 'Gestionar Usuarios',        
             'url'  => 'usuarios',        
-            'icon' => 'fas fa-fw fa-user',        
-            //'can'  => 'admin',   
+            'icon' => 'fas fa-fw fa-user',
+            'can' => 'usuarios.index',         
         ],
         ['header' => 'Gestion de Citas'],
         [   'text' => 'Especialidades',        
-            'url'  => 'especialidades',        
+            'route'  => 'especialidades.index',        
             'icon' => 'fas fa-fw fa-briefcase-medical',        
             //'can'  => 'admin',    
         ],
@@ -324,7 +332,7 @@ return [
         [   'text' => 'Citas',        
             'url' => 'citas',        
             'icon' => 'fas fa-fw fa-notes-medical',        
-            //'can'  => 'admin|recepcion|user',    
+            //'can'  => 'Admin|Recepcionista',    
         ],
         [   'text' => 'Calendario',        
             'url' => 'dashboard',        

@@ -62,5 +62,8 @@ toggleSwitch.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
 });
 
+require('admin-lte'); // Requerir AdminLTE
+window.toastr = require('toastr'); // Requerir Toastr
+
 
 app.mount('#app');

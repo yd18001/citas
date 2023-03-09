@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
+use Illuminate\Contracts\Auth\Access\Authorizable;
 
 class UsersController extends Controller
 {
@@ -15,22 +16,9 @@ class UsersController extends Controller
      *
      * @return voidagre
      */
-    /*
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('role:admin', ['only' => 'index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
-    }
-    */
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            if (auth()->user()->role == 'recepcion' || auth()->user()->role == 'user') {
-                abort(403);
-            }
-            return $next($request);
-        });
     }
     /**
      * Display a listing of the resource.
@@ -38,9 +26,10 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
+        $roles = Role::all();
         $users = User::all();
-        return view('usuarios.index')->with('users', $users);
+        return view('usuarios.index', compact('users', 'roles'));
     }
 
     /**
@@ -87,19 +76,22 @@ class UsersController extends Controller
                 'min:8',
                 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
                 'confirmed',
+                'role_id' => ['required', 'exists:roles,id'],
             ],
-            'role' => ['required', 'string', 'in:admin,recepcion,user'],
+
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request['name'],
             'username' => $request['username'],
             //'password' => Hash::make($request['password']), // esta linea encripta las contraseñas
             'password' => $request['password'],
-            'role' => $request['role'],
         ]);
 
-        return redirect('/usuarios');
+        $role = Role::find($request['role_id']);
+        $user->assignRole($role);
+
+        return redirect('/usuarios')->with('success', 'Usuario creado correctamente');
     }
 
     /**
@@ -111,7 +103,8 @@ class UsersController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        return view('usuarios.edit')->with('user', $user);
+        $roles = Role::all();
+        return view('usuarios.index', compact('user', 'roles'));
     }
 
     /**
@@ -123,7 +116,8 @@ class UsersController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('usuarios.edit')->with('user', $user);
+        $roles = Role::all();
+        return view('usuarios.edit', compact('user', 'roles'));
     }
 
     /**
@@ -152,17 +146,20 @@ class UsersController extends Controller
                 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
                 'confirmed',
             ],
-            'role' => ['required', 'string', 'in:admin,recepcion,user'],
+            'roles' => ['required', 'array'],
+            'roles.*' => ['exists:roles,id'], // asegura que cada role exista en la tabla roles
         ]);
 
         $user->name = $request->get('name');
         $user->username = $request->get('username');
-        $user->role = $request->get('role');
         $user->password = Hash::make($request->get('password'));
+
+        $roles = Role::whereIn('id', $request->input('roles', []))->get();
+        $user->syncRoles($roles);
 
         $user->save();
 
-        return redirect('/usuarios');
+        return redirect('/usuarios')->with('success', 'Usuario actualizado correctamente');
     }
 
     /**

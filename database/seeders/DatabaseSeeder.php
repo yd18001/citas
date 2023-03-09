@@ -19,22 +19,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        //Llamo al seede de roler para poder asignar roles a los usuarios
+        $this->call(RoleSeeder::class);
 
-        $admin = User::create([
+        User::create([
             'name' => 'Administrador',
             'username' => 'admin',
-            'password' => Hash::make('admin'),
-            'role' => 'admin',
-        ]);
-        $admin->save();
+            'password' => Hash::make('Fundeso1977'),
+        ])->assignRole('Admin');
 
-        $test = User::create([
+        User::create([
+            'name' => 'Developer',
+            'username' => 'dev',
+            'password' => Hash::make('dev1998'),
+        ])->assignRole('Admin');
+
+        User::create([
             'name' => 'Archivo Caja 1',
-            'username' => 'archivo1',
+            'username' => 'caja1',
             'password' => Hash::make('archivo'),
-            'role' => 'recepcion',
-        ]);
-        $test->save();
+        ])->assignRole('Recepcionista');
 
         $especialidad = Especialidad::create([
         'nombreEspecialidad' => 'Psicología',
