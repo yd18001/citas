@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use Illuminate\Contracts\Auth\Access\Authorizable;
+use Illuminate\Pagination\Paginator;
 
 class UsersController extends Controller
 {
@@ -28,7 +29,7 @@ class UsersController extends Controller
     public function index()
     {   
         $roles = Role::all();
-        $users = User::all();
+        $users = User::paginate(10);
         return view('usuarios.index', compact('users', 'roles'));
     }
 

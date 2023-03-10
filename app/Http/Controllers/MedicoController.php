@@ -5,18 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Especialidad;
 use App\Models\Medico;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class MedicoController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            if (auth()->user()->role == 'recepcion' || auth()->user()->role == 'user') {
-                abort(403);
-            }
-            return $next($request);
-        });
     }
     /**
      * Display a listing of the resource.
@@ -25,7 +20,7 @@ class MedicoController extends Controller
      */
     public function index()
     {
-        $medicos = Medico::all();
+        $medicos = Medico::paginate(10);
         return view('medicos.index')->with('medicos', $medicos);
     }
 

@@ -4,18 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Exam;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class ExamController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            if (auth()->user()->role == 'recepcion' || auth()->user()->role == 'user') {
-                abort(403);
-            }
-            return $next($request);
-        });
     }
     /**
      * Display a listing of the resource.
@@ -24,7 +19,7 @@ class ExamController extends Controller
      */
     public function index()
     {
-        $exams = Exam::all();
+        $exams = Exam::paginate(10);
         return view('exams.index')->with('exams', $exams);
     }
 

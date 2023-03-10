@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Especialidad;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Traits\HasPermissions;
+use Illuminate\Pagination\Paginator;
 
 class EspecialidadController extends Controller
 {
@@ -21,7 +20,7 @@ class EspecialidadController extends Controller
      */
     public function index()
     {
-        $especialidades = Especialidad::all();
+        $especialidades = Especialidad::paginate(10);
         return view('especialidades.index', compact('especialidades'));
     }
 

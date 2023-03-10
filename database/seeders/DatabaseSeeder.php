@@ -5,8 +5,8 @@ namespace Database\Seeders;
 use App\Models\Especialidad;
 use App\Models\Exam;
 use App\Models\Medico;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Factories\EspecialidadFactory;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -49,6 +49,13 @@ class DatabaseSeeder extends Seeder
 
         $especialidad = Especialidad::create([
             'nombreEspecialidad' => 'Neurología',
+            'clinica' => 'Antiguo Cuscatlán',
+            'estadoEspecialidad' => true,
+        ]);
+        $especialidad->save();
+
+        $especialidad = Especialidad::create([
+            'nombreEspecialidad' => 'Reumatología',
             'clinica' => 'Antiguo Cuscatlán',
             'estadoEspecialidad' => true,
         ]);

@@ -289,58 +289,58 @@ return [
     |
     */
 
-    'menu' => [   
+    'menu' => [
         //Navbar items:    
         [
-            'text'         => 'Inicio', 
+            'text'         => 'Inicio',
             //'url' => 'inicio',
-            'icon' => 'fas fa-fw fa-home', 
-            'topnav' => true,    
+            'icon' => 'fas fa-fw fa-home',
+            'topnav' => true,
         ],
-    
         // Sidebar items:
-        [   'header' => 'Herramientas Administrativas',
+        [
+            'header' => 'Herramientas Administrativas',
             'can' => 'usuarios.index',
         ],
-        [        
-            'text' => 'Gestionar Usuarios',        
-            'url'  => 'usuarios',        
+        [
+            'text' => 'Gestionar Usuarios',
+            'url'  => 'usuarios',
             'icon' => 'fas fa-fw fa-user',
-            'can' => 'usuarios.index',         
+            'can' => 'usuarios.index',
         ],
         ['header' => 'Gestion de Citas'],
-        [   'text' => 'Especialidades',        
-            'route'  => 'especialidades.index',        
-            'icon' => 'fas fa-fw fa-briefcase-medical',        
-            //'can'  => 'admin',    
+        [
+            'text' => 'Calendario',
+            'url' => 'dashboard',
+            'icon' => 'fas fa-fw fa-calendar',
+            'can'  => 'dashboard',
         ],
-        [   'text' => 'Medicos',        
-            'url'  => 'medicos',        
-            'icon' => 'fas fa-fw fa-stethoscope',        
-            //'can'  => 'admin',    
+        [
+            'text' => 'Especialidades',
+            'route'  => 'especialidades.index',
+            'icon' => 'fas fa-fw fa-briefcase-medical',
+            'can'  => 'especialidades.index',
         ],
-        [   'text' => 'Examenes',        
-            'url'  => 'exams',        
-            'icon' => 'fas fa-fw fa-prescription-bottle',        
-            //'can'  => 'admin',    
+        [
+            'text' => 'Medicos',
+            'url'  => 'medicos',
+            'icon' => 'fas fa-fw fa-stethoscope',
+            'can'  => 'medicos.index',
         ],
-        [   'text' => 'Pacientes',        
-            'url' => 'pacientes',        
-            'icon' => 'fas fa-fw fa-users',        
-            //'can'  => 'admin|recepcion',    
+        [
+            'text' => 'Examenes',
+            'url'  => 'exams',
+            'icon' => 'fas fa-fw fa-prescription-bottle',
+            'can'  => 'exams.index',
         ],
-        [   'text' => 'Citas',        
-            'url' => 'citas',        
-            'icon' => 'fas fa-fw fa-notes-medical',        
-            //'can'  => 'Admin|Recepcionista',    
-        ],
-        [   'text' => 'Calendario',        
-            'url' => 'dashboard',        
-            'icon' => 'fas fa-fw fa-calendar',        
-            //'can'  => 'admin|recepcion|user',    
+        [
+            'text' => 'Citas',
+            'url' => 'citas',
+            'icon' => 'fas fa-fw fa-notes-medical',
+            'can'  => 'citas.index',
         ],
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | Menu Filters

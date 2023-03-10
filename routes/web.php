@@ -21,38 +21,29 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-/*Route::group(['middleware' => ['role:Admin']], function () {
-   
-});*/
-
 /*--------------------Rutas de controladores--------------*/
- //Rutas Usuarios
- Route::middleware(['can:editar-usuarios'])->group(function () {
-    // Rutas que requieren el permiso "editar-usuarios"
+//Rutas Usuarios
+Route::middleware(['can:usuarios.index'])->group(function () {
+    // Rutas que requieren el permiso "usuarios.index"
     Route::resource('usuarios', 'App\Http\Controllers\UsersController');
-    
+    Route::resource('especialidades', 'App\Http\Controllers\EspecialidadController');
+    Route::resource('medicos', 'App\Http\Controllers\MedicoController');
+    Route::resource('exams', 'App\Http\Controllers\ExamCOntroller');
 });
 
+Route::middleware(['can:citas.index'])->group(function () {
+    //Rutas Paciente
+    Route::resource('pacientes', 'App\Http\Controllers\PacienteController');
 
-//Rutas Medicos
-Route::resource('medicos', 'App\Http\Controllers\MedicoController');
-Route::get('medicos/{id}/edit', 'MedicoController@edit')->name('medicos.edit');
-
-//Rutas Especialidad
-Route::resource('especialidades', 'App\Http\Controllers\EspecialidadController');
-Route::get('especialidades/{id}/edit', 'EspecialidadController@edit')->name('especialidades.edit');
-
-//Rutas Examenes
-Route::resource('exams', 'App\Http\Controllers\ExamCOntroller');
-Route::get('exams/{id}/edit', 'ExamController@edit')->name('exams.edit');
+    //Rutas Citas
+    Route::resource('citas', 'App\Http\Controllers\CitaController');
+});
 
 //Rutas Paciente
 Route::resource('pacientes', 'App\Http\Controllers\PacienteController');
-Route::get('pacientes/{id}/edit', 'PacienteController@edit')->name('pacientes.edit');
 
 //Rutas Citas
 Route::resource('citas', 'App\Http\Controllers\CitaController');
-Route::get('citas/{id}/edit', 'CitaContrelle@edit')->name('citas.edit');
 
 //Ruta Dashboard
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('home');

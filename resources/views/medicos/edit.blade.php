@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Actualizar | Medicos')
+@section('title', 'Actualizar | Medico')
 @section('content')
 
 <!-- Card -->

@@ -6,6 +6,7 @@ use App\Models\Cita;
 use App\Models\Medico;
 use App\Models\Exam;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class CitaController extends Controller
 {
@@ -20,7 +21,7 @@ class CitaController extends Controller
      */
     public function index()
     {
-        $citas = Cita::with(['medico', 'exam'])->get();
+        $citas = Cita::with(['medico', 'exam'])->paginate(10);
         return view('citas.index')->with('citas', $citas);
     }
 

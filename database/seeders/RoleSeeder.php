@@ -51,9 +51,9 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'citas.edit', 'guard_name' => 'web'])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'citas.destroy', 'guard_name' => 'web'])->syncRoles([$role1, $role2]);
 
-        Permission::create(['name' => 'paciente.index', 'guard_name' => 'web'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'paciente.create', 'guard_name' => 'web'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'paciente.edit', 'guard_name' => 'web'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'paciente.destroy', 'guard_name' => 'web'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'pacientes.index', 'guard_name' => 'web'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'pacientes.create', 'guard_name' => 'web'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'pacientes.edit', 'guard_name' => 'web'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'pacientes.destroy', 'guard_name' => 'web'])->syncRoles([$role1, $role2]);
     }
 }

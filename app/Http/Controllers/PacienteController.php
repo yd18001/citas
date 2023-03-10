@@ -4,18 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Paciente;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class PacienteController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            if (auth()->user()->role == 'recepcion' || auth()->user()->role == 'user') {
-                abort(403);
-            }
-            return $next($request);
-        });
     }
     /**
      * Display a listing of the resource.
@@ -24,7 +19,7 @@ class PacienteController extends Controller
      */
     public function index()
     {
-        $pacientes = Paciente::all();
+        $pacientes = Paciente::paginate(10);
         return view('pacientes.index', compact('pacientes'));
     }
 
