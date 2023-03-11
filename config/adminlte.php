@@ -311,7 +311,7 @@ return [
         ['header' => 'Gestion de Citas'],
         [
             'text' => 'Calendario',
-            'url' => 'dashboard',
+            'url' => 'calendario',
             'icon' => 'fas fa-fw fa-calendar',
             'can'  => 'dashboard',
         ],

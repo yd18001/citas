@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CalendarioController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use Spatie\Permission\Middlewares\RoleMiddleware;
@@ -44,6 +45,8 @@ Route::resource('pacientes', 'App\Http\Controllers\PacienteController');
 
 //Rutas Citas
 Route::resource('citas', 'App\Http\Controllers\CitaController');
+
+Route::resource('calendario', CalendarioController::class);
 
 //Ruta Dashboard
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('home');
