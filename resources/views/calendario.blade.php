@@ -43,10 +43,7 @@
                     <div class="col-md-12" style="text-align: center">
                         <h1>Calendario</h1>
                     </div>
-                    <div class="card mx-auto">
-                        <div class="card-header">
-                            <h3 class="card-title"></h3>
-                        </div>
+                    <div class="card card-outline card-secondary mx-auto">
                         <div class="card-body">
                             <form id="filtro-form" class="ajax-form" method="GET" action="{{ route('calendario.index') }}"
                                 data-section="calendar">

@@ -27,9 +27,6 @@ Route::get('/', function () {
 Route::middleware(['can:usuarios.index'])->group(function () {
     // Rutas que requieren el permiso "usuarios.index"
     Route::resource('usuarios', 'App\Http\Controllers\UsersController');
-    Route::resource('especialidades', 'App\Http\Controllers\EspecialidadController');
-    Route::resource('medicos', 'App\Http\Controllers\MedicoController');
-    Route::resource('exams', 'App\Http\Controllers\ExamCOntroller');
 });
 
 Route::middleware(['can:citas.index'])->group(function () {
@@ -38,6 +35,18 @@ Route::middleware(['can:citas.index'])->group(function () {
 
     //Rutas Citas
     Route::resource('citas', 'App\Http\Controllers\CitaController');
+});
+
+Route::middleware(['can:especialidades.index'])->group(function () {
+    Route::resource('especialidades', 'App\Http\Controllers\EspecialidadController');
+});
+
+Route::middleware(['can:medicos.index'])->group(function () {
+    Route::resource('medicos', 'App\Http\Controllers\MedicoController');
+});
+
+Route::middleware(['can:exams.index'])->group(function () {
+    Route::resource('exams', 'App\Http\Controllers\ExamCOntroller');
 });
 
 //Rutas Paciente

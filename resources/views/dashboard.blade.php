@@ -1,101 +1,138 @@
-    @extends('adminlte::page')
-    @section('title', 'Dashboard')
-    @section('content')
+@extends('adminlte::page')
+@section('title', 'Dashboard')
+@section('content')
 
-        <!-- script de dependencia de fullcalendar para mostrar el calendario -->
-        <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-        <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
-        <script src="{{ asset('js/app.js') }}" defer></script>
+    <!-- script de dependencia de fullcalendar para mostrar el calendario -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
 
-        <!--script para crear el calendario y sus eventos (citas)-->
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var calendarEl = document.getElementById('calendar');
+    <!--script para crear el calendario y sus eventos (citas)-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Crear un segundo objeto de calendario para el mini calendario
+            var minicalendarEl = document.getElementById('mini-calendar');
 
-                var calendar = new FullCalendar.Calendar(calendarEl, {
-                    locale: 'es',
-                    initialView: 'dayGridMonth',
-                    eventColor: '#007bff',
-                    eventTextColor: '#fff',
-                    headerToolbar: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-                    },
-                    buttonText: {
-                        today: 'Hoy',
-                        month: 'Mes',
-                        week: 'Semana',
-                        day: 'Día',
-                        list: 'Agenda'
-                    },
-                    events: {!! json_encode($eventos) !!} //Muestra los eventos en el calendario
-                });
-                calendar.render();
-
+            var minicalendar = new FullCalendar.Calendar(minicalendarEl, {
+                headerToolbar: false,
+                locale: 'es',
+                initialView: 'dayGridMonth',
+                eventColor: '#000',
+                eventTextColor: '#fff',
+                events: {!! json_encode($eventos) !!},
+                scrollTime: null,
+                height: 'auto' //Muestra los eventos en el calendario
             });
-        </script>
+            // Renderizar el mini calendario
+            minicalendar.render();
+
+        });
+    </script>
 
 
-        <!-- Contenedor principal-->
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-12">
-                    <div class="col-md-12" style="text-align: center">
-                        <h1>Calendario</h1>
+    <!-- Contenedor principal-->
+    <div class="container">
+        <br>
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="small-box bg-gradient-gray">
+                    <div class="inner">
+                        <h3>{{ $citas->count() }}</h3>
+                        <p>Citas Registradas</p>
                     </div>
-                    <div class="card mx-auto">
-                        <div class="card-header">
-                            <h3 class="card-title"></h3>
-                        </div>
-                        <div class="card-body">
-                            <form id="filtro-form" class="ajax-form" method="GET" action="{{ route('dashboard.index') }}"
-                                data-section="calendar">
-                                @csrf
-                                <div class="row mb-4">
-                                    <!-- Menú desplegable -->
-                                    <div class="col-md-4 d-flex align-items-center">
-                                        <label class="col-md-4 col-form-label" for="filtro">Filtrar por:</label>
-                                        <select class="form-control" id="filtro" name="filtro">
-                                            <option value="">Todos</option>
-                                            @foreach ($medicos as $medico)
-                                                <option value="medico_{{ $medico->id }}"
-                                                    @if ($filtro == 'medico_' . $medico->id) selected @endif>
-                                                    {{ $medico->nombreMedico }}
-                                                </option>
-                                            @endforeach
-                                            @foreach ($exams as $exam)
-                                                <option value="exam_{{ $exam->id }}"
-                                                    @if ($filtro == 'exam_' . $exam->id) selected @endif>
-                                                    {{ $exam->nombreExamen }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <!-- Botón de Filtro -->
-                                        <button type="submit" id="filter-button" class="btn btn-dark mr-2 ml-2"
-                                            form="filtro-form" data-action="load-data">Filtrar</button>
-                                    </div>
-                                    <!-- Botón de Agendar Cita -->
-                                    <div class="col-md-8 d-flex justify-content-end align-items-center">
-                                        <a href="{{ route('citas.create') }}" id="agendarCita"
-                                            class="btn btn-success ml-auto">Agendar cita</a>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                    <div class="icon">
+                        <i class="fas fa-user-plus"></i>
                     </div>
-
-
-                    <!-- Calendario -->
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex"></div>
-                            <div id="calendar" data-section="calendar"></div>
-                        </div>
+                    <a href="citas" class="small-box-footer">
+                        Ver <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="small-box bg-navy">
+                    <div class="inner">
+                        <h3>{{ $especialidades->count() }}</h3>
+                        <p>Especialidades Disponibles</p>
                     </div>
-
+                    <div class="icon">
+                        <i class="fas fa-briefcase-medical"></i>
+                    </div>
+                    <a href="especialidades" class="small-box-footer">
+                        Ver <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="small-box bg-dark">
+                    <div class="inner">
+                        <h3>{{ $medicos->count() }}</h3>
+                        <p>Medicos Disponibles</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <a href="medicos" class="small-box-footer">
+                        Ver <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="small-box bg-secondary">
+                    <div class="inner">
+                        <h3>{{ $exams->count() }}</h3>
+                        <p>Examenes Disponibles</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-prescription-bottle"></i>
+                    </div>
+                    <a href="exams" class="small-box-footer">
+                        Ver <i class="fas fa-arrow-circle-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
 
-    @endsection
+        <div class="row">
+            <!-- Calendario en miniatura -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex"></div>
+                        <div id="mini-calendar" data-section="mini-calendar"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Nombre completo</th>
+                                    <th>Teléfono</th>
+                                    <th>Médico</th>
+                                    <th>Examen</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($citasDelDia as $cita)
+                                    <tr>
+                                        <td>{{ $cita->nombreCompleto }}</td>
+                                        <td>{{ $cita->numeroTelefono }}</td>
+                                        <td>{{ $cita->medicos ? $cita->medicos->nombreMedico : 'N/A' }}</td>
+                                        <td>{{ $cita->exams ? $cita->exams->nombreExamen : 'N/A' }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+@endsection

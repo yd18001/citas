@@ -31,17 +31,17 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'usuarios.edit', 'guard_name' => 'web'])->syncRoles([$role1]);
         Permission::create(['name' => 'usuarios.destroy', 'guard_name' => 'web'])->syncRoles([$role1]);
 
-        Permission::create(['name' => 'especialidades.index', 'guard_name' => 'web'])->syncRoles([$role1]);
+        Permission::create(['name' => 'especialidades.index', 'guard_name' => 'web'])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'especialidades.create', 'guard_name' => 'web'])->syncRoles([$role1]);
         Permission::create(['name' => 'especialidades.edit', 'guard_name' => 'web'])->syncRoles([$role1]);
         Permission::create(['name' => 'especialidades.destroy', 'guard_name' => 'web'])->syncRoles([$role1]);
 
-        Permission::create(['name' => 'medicos.index', 'guard_name' => 'web'])->syncRoles([$role1]);
+        Permission::create(['name' => 'medicos.index', 'guard_name' => 'web'])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'medicos.create', 'guard_name' => 'web'])->syncRoles([$role1]);
         Permission::create(['name' => 'medicos.edit', 'guard_name' => 'web'])->syncRoles([$role1]);
         Permission::create(['name' => 'medicos.destroy', 'guard_name' => 'web'])->syncRoles([$role1]);
 
-        Permission::create(['name' => 'exams.index', 'guard_name' => 'web'])->syncRoles([$role1]);
+        Permission::create(['name' => 'exams.index', 'guard_name' => 'web'])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'exams.create', 'guard_name' => 'web'])->syncRoles([$role1]);
         Permission::create(['name' => 'exams.edit', 'guard_name' => 'web'])->syncRoles([$role1]);
         Permission::create(['name' => 'exams.destroy', 'guard_name' => 'web'])->syncRoles([$role1]);
